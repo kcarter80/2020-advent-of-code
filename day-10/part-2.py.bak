@@ -1,0 +1,87 @@
+# placing the rows from the input file into a list
+with open('input-0') as input_file:
+	input_lines = input_file.readlines()
+
+adapters = [0]
+for input_line in input_lines:
+	adapters.append(int(input_line.rstrip()))
+adapters.sort()
+adapters.append(adapters[len(adapters) - 1] + 3)
+
+# assume passed in arrangement is valid
+def evaluate_arrangement(arrangement,initial_index,level):
+	global evaluations
+	evaluations += 1
+	level_prefix = (level - 1) * '\t'
+	print('%sinitial_index %s, level %s, arrangement %s' %(level_prefix,initial_index,level,arrangement))
+	valid_arrangements = 1
+	
+	i = initial_index
+	while i < len(arrangement)-2:
+		print('%si: %s, this element: %s' %(level_prefix,i,arrangement[i]))
+		# if there's a gap of 3 between elements that are 3 apart
+		#if(arrangement[i+2] - arrangement[i-1] == 3):
+		#	further_steps = 1
+		#	while(arrangement[i+2+further_steps] - arrangement[i-1] == 
+		#	# then can remove 2 and evaluate
+		#	print('%s2 can be removed' %(level_prefix))
+		#	new_arrangement = list(arrangement)
+		#	new_arrangement.pop(i)
+		#	new_arrangement.pop(i)
+		#	print ('%sremoved 2 now evaluating with index %s' %(level_prefix,i))
+		#	future_valid_arrangements = evaluate_arrangement(new_arrangement,i,level+1) 
+		#	valid_arrangements += future_valid_arrangements	
+		#	print('%scurrent va %s' %(level_prefix,valid_arrangements))
+		if(arrangement[i+1] - arrangement[i-1] <= 3):
+			#print('%s1 can be removed' %(level_prefix))
+			new_arrangement = list(arrangement)
+			removed = new_arrangement.pop(i)
+			print ('%sremoved %s now evaluating with index %s' %(level_prefix,removed,i))
+			future_valid_arrangements = evaluate_arrangement(new_arrangement,i,level+1) 
+			valid_arrangements += future_valid_arrangements
+			print('%scurrent va %s' %(level_prefix,valid_arrangements))
+		i += 1
+	return valid_arrangements
+
+evaluations = 0
+print evaluate_arrangement(adapters,1,1)
+print ('!!!',evaluations)
+
+
+
+
+			# pop and evaluate
+#			new_arrangement = list(arrangement)
+#			new_arrangement.pop(i)
+#			joined_arrangement = ''.join(map(str, new_arrangement))
+#			if not valid_arrangements.has_key(joined_arrangement):
+#				valid_arrangements[joined_arrangement] = True
+#				evaluate_arrangement(new_arrangement,level+1)
+
+
+
+
+
+# assume passed in arrangement is valid
+#def evaluate_arrangement(arrangement,initial_index,level):
+#	print(level,initial_index,arrangement)
+#	valid_arrangements = 1
+	
+#	i = initial_index
+#	while i < len(arrangement)-2:
+#		if(arrangement[i+2] - arrangement[i-1] <= 3):
+#			print 'here'
+#			# pop 2 and evaluate
+#			new_arrangement = list(arrangement)
+#			new_arrangement.pop(i)
+#			new_arrangement.pop(i)
+#			valid_arrangements += 2 + 2 * evaluate_arrangement(new_arrangement,i,level+1)
+#			i += 2
+#		elif(arrangement[i+1] - arrangement[i-1] <= 3):
+#			new_arrangement = list(arrangement)
+#			new_arrangement.pop(i)
+#			valid_arrangements += evaluate_arrangement(new_arrangement,i,level+1)
+#			i += 1
+#		else:
+#			i += 1
+#	return valid_arrangements
