@@ -1,3 +1,5 @@
+import time
+
 def pretty_layout(seat_layout):
 	pretty_string = ''
 	for i in range(0, len(seat_layout)):
@@ -21,6 +23,7 @@ seats_changed = None
 
 while seats_changed != 0:
 	seats_changed = 0
+	time.sleep(.1)
 	print pretty_layout(seat_layout)
 	next_seat_layout = [x[:] for x in seat_layout]
 	position_x = 0
