@@ -1,0 +1,51 @@
+busses = [7,13,'x','x',59,'x',31,19]
+#busses = [17,'x',13,19]
+#busses = [67,7,59,61]
+#busses = [67,'x',7,59,61]
+#busses = [67,7,'x',59,61]
+#busses = [1789,37,47,1889] # 1202161486
+
+#busses = [29,'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',37,'x','x','x','x','x',631,'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',13,19,'x','x','x',23,'x','x','x','x','x','x','x',383,'x','x','x','x','x','x','x','x','x',41,'x','x','x','x','x','x',17]
+
+i = 0
+would_be_index = 0
+while(i < len(busses)):
+	if busses[i] == 'x':
+		busses.pop(i)
+	else:
+		busses[i] = [busses[i],would_be_index]
+		i += 1
+	would_be_index += 1
+print busses
+
+def sortFunc(e):
+	return -e[0]
+
+# the busses with the longest intervals are sorted to the front of the list
+busses.sort(key=sortFunc)
+print busses
+
+# distance from the first bus departure time
+offset = busses[0][1]
+
+# reset all the busses so their offset is relative to the slowest bus
+for i in range(len(busses)):
+	busses[i][1] -= offset
+
+print busses
+
+# this is the first possible time that the first could leave and work 
+goal_depart_time = 0
+so_far_so_good = False
+while not so_far_so_good:
+	if goal_depart_time % (busses[0][0] * 1000000) == 0:
+		print goal_depart_time
+	so_far_so_good = True
+	#print goal_depart_time
+	for i in range(len(busses)):
+		#print busses[i],i
+		if not (goal_depart_time + busses[i][1]) % busses[i][0] == 0:
+			so_far_so_good = False
+			goal_depart_time += busses[0][0]
+			break
+print goal_depart_time - offset

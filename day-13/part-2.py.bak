@@ -1,0 +1,42 @@
+#earliest_timestamp_could_depart = 939
+busses = [7,13,'x','x',59,'x',31,19]
+#busses = [17,'x',13,19]
+#busses = [67,7,59,61]
+#busses = [67,'x',7,59,61]
+#busses = [67,7,'x',59,61]
+#busses = [1789,37,47,1889]
+
+#earliest_timestamp_could_depart = 1000507
+#busses = [29,'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',37,'x','x','x','x','x',631,'x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x',13,19,'x','x','x',23,'x','x','x','x','x','x','x',383,'x','x','x','x','x','x','x','x','x',41,'x','x','x','x','x','x',17]
+
+goal_depart_time = 0
+
+so_far_so_good = False
+
+while not so_far_so_good:
+	
+	if goal_depart_time % (busses[0] * 1000000) == 0:
+		print goal_depart_time
+	so_far_so_good = True
+	#print goal_depart_time
+	for i in range(len(busses)):
+		if busses[i] != 'x':
+			#print busses[i],i
+			if not (goal_depart_time + i) % busses[i] == 0:
+				so_far_so_good = False
+				goal_depart_time += busses[0]
+				break
+
+
+print goal_depart_time
+
+#for bus in busses:
+#	if bus != 'x':
+#		if goal_depart_time % bus == 0
+
+#		while i * bus < earliest_timestamp_could_depart:
+#			i += 1
+#		if earliest_time == None or i * bus < earliest_time:
+#			earliest_time = i * bus
+#			earliest_bus = bus
+
